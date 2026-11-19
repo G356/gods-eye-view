@@ -3,6 +3,8 @@ import { storeToRefs } from 'pinia';
 import { computed, nextTick, useTemplateRef, watch } from 'vue';
 import { formatNumber, t, tn } from '../../../i18n/index.js';
 import UiButton from '../../kit/UiButton.vue';
+import UiCheckbox from '../../kit/UiCheckbox.vue';
+import UiCloseButton from '../../kit/UiCloseButton.vue';
 import UiSelect from '../../kit/UiSelect.js';
 import {
   libraryStatTiles,
@@ -102,13 +104,11 @@ const onDialogClick = (event) => {
       <h2 id="data-library-title" class="panel-title panel-surface-title">
         {{ t('DATA LIBRARY') }}
       </h2>
-      <UiButton
+      <UiCloseButton
         class="panel-surface-control data-library-close"
         :label="t('Close data library')"
-        :native-title="false"
         @click="controls?.close()"
-        >×</UiButton
-      >
+      />
     </header>
     <div class="data-library-body" data-panel-body>
       <dl class="data-library-stats" :aria-label="t('Data Library at a glance')">
@@ -154,14 +154,13 @@ const onDialogClick = (event) => {
             @update:model-value="controls?.setFamily($event)"
           />
         </label>
-        <label class="data-library-check">
-          <input
-            type="checkbox"
-            :checked="view.filter.availableOnly"
-            @change="controls?.setAvailableOnly($event.target.checked)"
-          />
+        <UiCheckbox
+          class="data-library-check"
+          :model-value="view.filter.availableOnly"
+          @update:model-value="controls?.setAvailableOnly($event)"
+        >
           <span>{{ t('Only what this instance serves') }}</span>
-        </label>
+        </UiCheckbox>
       </div>
       <div class="data-library-toolbar">
         <p class="data-library-status" role="status" aria-live="polite">
